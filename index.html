@@ -1,12 +1,927 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patrick Mason</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Patrick Mason — digital adoption, enterprise implementation, change management, and solution engineering." />
+  <meta name="theme-color" content="#0a0d12" />
+
+  <meta property="og:title" content="Patrick Mason — Enterprise Technology & Digital Adoption" />
+  <meta property="og:description" content="I make complex enterprise technology easier to understand, adopt, and use." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://patrickmason.info/" />
+
+  <title>Patrick Mason | Enterprise Technology & Digital Adoption</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <style>
+    :root {
+      --bg: #090c11;
+      --bg-2: #10151d;
+      --panel: rgba(18, 24, 34, 0.74);
+      --panel-solid: #121822;
+      --text: #f5f7fb;
+      --muted: #a8b2c1;
+      --soft: #758195;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #73f2c2;
+      --accent-2: #8aa7ff;
+      --accent-3: #c598ff;
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(138,167,255,.12), transparent 28rem),
+        radial-gradient(circle at 85% 20%, rgba(115,242,194,.09), transparent 30rem),
+        radial-gradient(circle at 55% 85%, rgba(197,152,255,.09), transparent 26rem),
+        var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+      z-index: -2;
+    }
+
+    #glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(115,242,194,.08), rgba(138,167,255,.025) 45%, transparent 68%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      transition: opacity .25s ease;
+      opacity: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid transparent;
+      transition: .25s ease;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-wrap.scrolled {
+      background: rgba(9,12,17,.72);
+      border-bottom-color: var(--line);
+    }
+
+    nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      align-items: center;
+      padding: 80px 0 100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 25px;
+      padding: 8px 12px;
+      color: #c7d1df;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .03em;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(115,242,194,.4);
+      animation: pulse 2.4s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(115,242,194,.36); }
+      65% { box-shadow: 0 0 0 9px rgba(115,242,194,0); }
+      100% { box-shadow: 0 0 0 0 rgba(115,242,194,0); }
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 1000px;
+      font-size: clamp(54px, 8.1vw, 112px);
+      line-height: .93;
+      letter-spacing: -.066em;
+      font-weight: 850;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--accent) 8%, #b6c8ff 51%, var(--accent-3) 94%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 35px 0 0;
+      color: var(--muted);
+      font-size: clamp(19px, 2vw, 25px);
+      line-height: 1.55;
+      letter-spacing: -.015em;
+    }
+
+    .hero-copy strong {
+      color: var(--text);
+      font-weight: 680;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 38px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.2);
+    }
+
+    .button.primary {
+      color: #07110e;
+      background: var(--accent);
+      border-color: transparent;
+      box-shadow: 0 12px 35px rgba(115,242,194,.14);
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,.045);
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .signal-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 46px;
+    }
+
+    .signal {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--soft);
+      background: rgba(255,255,255,.025);
+      font-size: 12px;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    section {
+      padding: 105px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.03;
+      letter-spacing: -.045em;
+    }
+
+    .section-copy {
+      margin: 18px 0 0;
+      max-width: 730px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      min-height: 190px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(115,242,194,.25);
+    }
+
+    .stat .number {
+      font-size: clamp(38px, 4vw, 58px);
+      line-height: 1;
+      letter-spacing: -.05em;
+      font-weight: 850;
+      color: var(--text);
+    }
+
+    .stat .label {
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .cap-card, .work-card {
+      position: relative;
+      overflow: hidden;
+      padding: 29px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .cap-card:hover, .work-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(138,167,255,.23);
+      background: rgba(20, 27, 38, .9);
+    }
+
+    .cap-card .num, .work-card .num {
+      color: var(--soft);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
+
+    .cap-card h3, .work-card h3 {
+      margin: 36px 0 10px;
+      font-size: 25px;
+      letter-spacing: -.035em;
+    }
+
+    .cap-card p, .work-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .work-card {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-card h3 { margin-top: auto; }
+
+    .work-card .tag {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 16px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: rgba(115,242,194,.07);
+      color: #bdf9e1;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 22px;
+      bottom: 22px;
+      width: 1px;
+      background: linear-gradient(var(--accent), rgba(255,255,255,.06));
+    }
+
+    .role {
+      position: relative;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 22px;
+      padding: 12px 0;
+    }
+
+    .role-dot {
+      width: 11px;
+      height: 11px;
+      margin-top: 8px;
+      margin-left: 10px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 5px rgba(115,242,194,.06);
+      z-index: 2;
+    }
+
+    .role-body {
+      padding: 25px 28px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .role-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .role h3 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -.025em;
+    }
+
+    .role time {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .role p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 10px 13px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: #c6cfdb;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .closer {
+      text-align: center;
+      padding: 120px 0 130px;
+    }
+
+    .closer h2 {
+      max-width: 880px;
+      margin: 0 auto;
+      font-size: clamp(44px, 6.6vw, 86px);
+    }
+
+    .closer p {
+      max-width: 650px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .closer .actions { justify-content: center; }
+
+    footer {
+      padding: 28px 0 38px;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 13px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
+      #glow { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { min-height: auto; padding: 90px 0 95px; }
+      .section-head { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .work-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(calc(100% - 28px), var(--max)); }
+      nav { height: 68px; }
+      .brand-name { display: none; }
+      .nav-links { gap: 10px; }
+      .hero { padding: 72px 0 85px; }
+      h1 { font-size: clamp(48px, 16vw, 72px); }
+      section { padding: 78px 0; }
+      .stats, .grid-2 { grid-template-columns: 1fr; }
+      .stat { min-height: 150px; }
+      .cap-card, .work-card { padding: 24px; }
+      .role { grid-template-columns: 26px 1fr; gap: 12px; }
+      .timeline::before { left: 12px; }
+      .role-dot { margin-left: 7px; }
+      .role-body { padding: 21px; }
+      .closer { padding: 90px 0 100px; }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Patrick Mason</h1>
-  <p>Professional site coming soon.</p>
+  <div id="glow" aria-hidden="true"></div>
+
+  <header class="nav-wrap" id="nav">
+    <div class="shell">
+      <nav aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Patrick Mason home">
+          <span class="mark">PM</span>
+          <span class="brand-name">Patrick Mason</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#capabilities">Capabilities</a>
+          <a href="#work">Selected work</a>
+          <a href="#experience">Experience</a>
+          <a class="nav-cta" href="Patrick_Mason_Resume.pdf" download>Resume ↓</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" style="border-top:0">
+      <div class="shell">
+        <div class="eyebrow"><span class="pulse"></span> Enterprise technology, made usable</div>
+
+        <h1>
+          I make complex tech<br />
+          <span class="gradient-text">actually work for people.</span>
+        </h1>
+
+        <p class="hero-copy">
+          I’m Patrick Mason — a <strong>digital adoption, implementation, and change leader</strong>
+          who lives at the intersection of people, process, and enterprise technology.
+          I turn complicated systems into experiences teams can understand, adopt, and use well.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="#work">
+            See the work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+          <a class="button secondary" href="Patrick_Mason_Resume.pdf" download>
+            Download resume
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="signal-strip" aria-label="Credentials">
+          <span class="signal">PMP</span>
+          <span class="signal">Prosci Certified</span>
+          <span class="signal">WalkMe Solution Engineer</span>
+          <span class="signal">Enterprise SaaS</span>
+          <span class="signal">AI-Assisted Delivery</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="kicker">A little proof</div>
+          <div>
+            <h2>Strategy is good.<br />Evidence is better.</h2>
+            <p class="section-copy">
+              My work spans enterprise implementation, digital adoption, enablement,
+              process improvement, and technical solution design across Fortune 100,
+              government, healthcare, finance, construction, and technology environments.
+            </p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <article class="stat reveal">
+            <div class="number">10+</div>
+            <div class="label">Years across technology implementation, operations, training, and project management.</div>
+          </article>
+          <article class="stat reveal">
+            <div class="number">8×</div>
+            <div class="label">Growth of the Digital Adoption department over five years.</div>
+          </article>
+          <article class="stat reveal">
+            <div class="number">50%</div>
+            <div class="label">Training-time reduction achieved across multiple client implementations.</div>
+          </article>
+          <article class="stat reveal">
+            <div class="number">300+</div>
+            <div class="label">Hours leading a complex enterprise WalkMe build for JPMorgan Chase.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="kicker">What I do</div>
+          <div>
+            <h2>I translate between the humans and the systems.</h2>
+            <p class="section-copy">
+              The common thread in my career is taking something complicated — a platform,
+              process, rollout, or organizational change — and making it understandable enough
+              to execute, scalable enough to last, and useful enough that people actually adopt it.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="cap-card reveal">
+            <div class="num">01 / ADOPTION</div>
+            <h3>Digital Adoption & Change</h3>
+            <p>Adoption strategy, launch readiness, stakeholder alignment, communications, in-product guidance, training, and post-launch improvement.</p>
+          </article>
+
+          <article class="cap-card reveal">
+            <div class="num">02 / DELIVERY</div>
+            <h3>Enterprise Implementation</h3>
+            <p>Discovery through launch: requirements, configuration, validation, issue resolution, cross-functional coordination, training, and ongoing support.</p>
+          </article>
+
+          <article class="cap-card reveal">
+            <div class="num">03 / SOLUTIONS</div>
+            <h3>Solution Engineering</h3>
+            <p>Translating messy business needs into workable technical solutions, guided workflows, reporting, validations, and user experiences.</p>
+          </article>
+
+          <article class="cap-card reveal">
+            <div class="num">04 / SCALE</div>
+            <h3>Enablement & Standards</h3>
+            <p>Repeatable playbooks, builder standards, workshops, self-guided learning, coaching, and scalable operating models that leave teams more self-sufficient.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="kicker">Selected work</div>
+          <div>
+            <h2>Complex environments.<br />Practical outcomes.</h2>
+            <p class="section-copy">
+              A sample of the organizations and problems I’ve worked with across enterprise
+              project systems, digital adoption, change, training, and solution delivery.
+            </p>
+          </div>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="num">APPLE RE&D / RETAIL</div>
+            <h3>Enterprise guidance for complex project workflows.</h3>
+            <p>Built and expanded digital-adoption experiences, including custom navigation and user guidance, while supporting ongoing project-manager training.</p>
+            <span class="tag">Enterprise adoption</span>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="num">JPMORGAN CHASE</div>
+            <h3>A 300+ hour build in a validation-heavy environment.</h3>
+            <p>Led a complex WalkMe implementation with substantial validation and security requirements, then continued as an on-demand advisor after launch.</p>
+            <span class="tag">Solution engineering</span>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="num">STANFORD HEALTHCARE</div>
+            <h3>Change and enablement during an expedited migration.</h3>
+            <p>Supported a multi-phase PMIS transition and designed and delivered training for approximately 130 employees.</p>
+            <span class="tag">OCM + enablement</span>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="num">COLORADO DOT</div>
+            <h3>Guidance, training, and eventually quality oversight.</h3>
+            <p>Created digital guidance and LMS training for project-delivery processes, then moved into an oversight and chief-reviewer role.</p>
+            <span class="tag">Adoption at scale</span>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="num">CITY OF KIRKLAND</div>
+            <h3>From discovery to working project-management workflows.</h3>
+            <p>Led implementation from kickoff through release, translating cost and fund-tracking needs into system workflows, reporting, and adoption capabilities.</p>
+            <span class="tag">Implementation</span>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="num">ROOMS TO GO</div>
+            <h3>Turn the classroom into something scalable.</h3>
+            <p>Transformed instructor-led onboarding content into a self-guided digital learning experience designed to scale hiring and reduce classroom dependence.</p>
+            <span class="tag">Learning design</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="kicker">Career arc</div>
+          <div>
+            <h2>Operations → technology → enterprise transformation.</h2>
+            <p class="section-copy">
+              I came up through hands-on operations and technology leadership, then moved
+              deeper into enterprise implementation, digital adoption, solution engineering,
+              project management, and organizational change.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article class="role reveal">
+            <div class="role-dot"></div>
+            <div class="role-body">
+              <div class="role-top">
+                <h3>HKA Global — Manager, Digital Adoption & Change Management</h3>
+                <time>2019 — Present</time>
+              </div>
+              <p>Lead enterprise technology, digital-adoption, change, and enablement initiatives across platforms including PMWeb, WalkMe, Salesforce, SAP Ariba, and custom applications.</p>
+            </div>
+          </article>
+
+          <article class="role reveal">
+            <div class="role-dot"></div>
+            <div class="role-body">
+              <div class="role-top">
+                <h3>TruFusion — Technical Operations Manager</h3>
+                <time>2014 — 2019</time>
+              </div>
+              <p>Led technology rollout, process standardization, platform adoption, training, and scalable operating practices across a growing nationwide franchise organization.</p>
+            </div>
+          </article>
+
+          <article class="role reveal">
+            <div class="role-dot"></div>
+            <div class="role-body">
+              <div class="role-top">
+                <h3>Vegas Hot! Yoga & Pilates — Operations Manager / Director of Technology</h3>
+                <time>2008 — 2014</time>
+              </div>
+              <p>Managed operations, technology, staff development, customer experience, and process improvement while building and coaching teams.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="toolkit">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="kicker">Toolkit</div>
+          <div>
+            <h2>Business brain.<br />Technical enough to get dangerous.</h2>
+            <p class="section-copy">
+              I’m not trying to cosplay as a full-time software engineer. I am very comfortable
+              getting into the technical weeds when it helps solve the business problem.
+            </p>
+          </div>
+        </div>
+
+        <div class="stack reveal" aria-label="Tools and platforms">
+          <span class="chip">WalkMe</span>
+          <span class="chip">PMWeb</span>
+          <span class="chip">Salesforce</span>
+          <span class="chip">SAP Ariba</span>
+          <span class="chip">Inline Manual</span>
+          <span class="chip">jQuery</span>
+          <span class="chip">HTML</span>
+          <span class="chip">SQL fundamentals</span>
+          <span class="chip">ChatGPT</span>
+          <span class="chip">GitHub Copilot</span>
+          <span class="chip">Trello</span>
+          <span class="chip">Microsoft Teams</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="closer">
+      <div class="shell reveal">
+        <div class="kicker" style="margin-bottom:24px">Let’s build something useful</div>
+        <h2>Complex technology deserves better than “good luck, users.”</h2>
+        <p>
+          I’m interested in teams solving difficult problems where adoption, implementation,
+          communication, and technical execution all matter.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="mailto:PatrickWMason89@gmail.com">Email me</a>
+          <a class="button secondary" href="Patrick_Mason_Resume.pdf" download>Grab the resume ↓</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span>© <span id="year"></span> Patrick Mason</span>
+      <span>Built from scratch. No template crimes were committed.</span>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const glow = document.getElementById('glow');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 18);
+    }, { passive: true });
+
+    if (window.matchMedia('(pointer:fine)').matches) {
+      window.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+        glow.style.opacity = '1';
+      }, { passive: true });
+
+      document.documentElement.addEventListener('mouseleave', () => {
+        glow.style.opacity = '0';
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
